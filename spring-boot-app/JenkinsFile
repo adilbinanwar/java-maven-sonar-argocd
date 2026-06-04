@@ -16,7 +16,7 @@ pipeline {
     stage('Build and Test') {
     steps {
         sh 'ls -ltr'
-        sh 'sudo rm -rf spring-boot-app/target'   // ← add this line
+        sh 'rm -rf spring-boot-app/target'   // ← add this line
         sh 'cd spring-boot-app && mvn clean package'
     }
 }
