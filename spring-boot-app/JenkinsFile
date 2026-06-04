@@ -11,7 +11,7 @@ pipeline {
           REPO_NAME       = "java-maven-sonar-argocd"
           SONAR_URL       = "http://65.1.130.168:9000"
           DOCKER_USER     = "adilbinanwar" // Change to your actual Docker Hub username
-          IMAGE_NAME      = "adilbinanwar/ultimate-cicd"
+          IMAGE_NAME      = "ultimate-cicd"
           TAG             = "${BUILD_NUMBER}"
       }
   stages {
