@@ -5,6 +5,15 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
+  environment {
+          // Centralized configuration vars
+          REPO_OWNER      = "adilbinanwar"
+          REPO_NAME       = "java-maven-sonar-argocd"
+          SONAR_URL       = "http://65.1.130.168:9000"
+          DOCKER_USER     = "adilbinanwar" // Change to your actual Docker Hub username
+          IMAGE_NAME      = "adilbinanwar/ultimate-cicd"
+          TAG             = "${BUILD_NUMBER}"
+      }
   stages {
     stage('Checkout') {
       steps {
