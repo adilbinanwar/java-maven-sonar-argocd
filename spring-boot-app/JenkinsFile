@@ -16,7 +16,7 @@ pipeline {
     stage('Build and Test') {
     steps {
         sh 'ls -ltr'
-        sh 'sudo rm -rf spring-boot-app/target'   // ← add this line
+        sh 'rm -rf spring-boot-app/target'   // ← add this line
         sh 'cd spring-boot-app && mvn clean package'
     }
 }
@@ -39,7 +39,7 @@ pipeline {
         )]) {
             sh '''
                 echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                docker build -t vishnumadhu13/spring-boot-app:latest ./spring-boot-app
+                docker build -t adilbinanwar/spring-boot-app:latest ./spring-boot-app
                 docker push adilbinanwar/spring-boot-app:latest
             '''
         }
