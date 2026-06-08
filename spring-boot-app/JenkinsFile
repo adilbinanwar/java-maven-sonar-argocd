@@ -39,8 +39,8 @@ pipeline {
         )]) {
             sh '''
                 echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                docker build -t adilbinanwar/spring-boot-app:latest ./spring-boot-app
-                docker push adilbinanwar/spring-boot-app:latest
+                docker build -t adilbinanwar/spring-boot-app:${BUILD_NUMBER} ./spring-boot-app
+                docker push adilbinanwar/spring-boot-app:${BUILD_NUMBER}
             '''
         }
     }
