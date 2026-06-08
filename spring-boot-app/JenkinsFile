@@ -22,10 +22,10 @@ pipeline {
 }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://13.207.41.14:9000"
+        SONAR_URL = "http://13.201.98.244:9000"
       }
       steps {
-        withCredentials([string(credentialsId: 'sonar-jenkins', variable: 'SONAR_AUTH_TOKEN')]) {
+        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
           sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
         }
       }
@@ -39,8 +39,8 @@ pipeline {
         )]) {
             sh '''
                 echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                docker build -t vishnumadhu13/spring-boot-app:latest ./spring-boot-app
-                docker push vishnumadhu13/spring-boot-app:latest
+                docker build -t adilbinanwar/spring-boot-app:latest ./spring-boot-app
+                docker push adilbinanwar/spring-boot-app:latest
             '''
         }
     }
@@ -48,15 +48,15 @@ pipeline {
    stage('Update Deployment File') {
       environment {
         GIT_REPO_NAME = "java-maven-sonar-argocd"
-        GIT_USER_NAME = "VishnuMadhu13"
+        GIT_USER_NAME = "adilbinanwar"
         HOME = "${env.WORKSPACE}"
       }
       steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
             sh '''
                 git config --global --add safe.directory ${WORKSPACE}
-                git config user.email "vishnumadhu04723@gmail.com"
-                git config user.name "VishnuMadhu13"
+                git config user.email "adil004anwar@gmail.com"
+                git config user.name "adilbinanwar"
                 sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
                 git add spring-boot-app-manifests/deployment.yml
                 git commit -m "Update deployment image to version ${BUILD_NUMBER}"
